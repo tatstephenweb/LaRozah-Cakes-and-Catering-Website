@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Larozah - Your search results</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            rose:    { DEFAULT: '#E8325A', light: '#F76B8A', dark: '#C01F45' },
+            cream:'#FDF6EF',
+            cocoa:'#3B1F14',
+            blush:'#FDEEF3',
+            mink:'#8B5E52',
+            ash:'#0D182B',
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"', 'serif'],
+            body:['Jost', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+</head>
+<body class="antialiased">
+
+  <!--   NAVBAR  -->
+  <header class="sticky top-0 z-50 bg-rose/90 backdrop-blur-sm border-rose-100 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-20">
+
+        <!-- Logo -->
+        <a href="#" class="flex flex-col leading-none select-none">
+          <span class="font-display text-2xl md:text-3xl font-600 tracking-widest text-cocoa uppercase">
+            <img src="images/logo-white.png"
+            style="width:100px"
+            >
+          </span>
+        </a>
+
+        <!-- Desktop nav -->
+        <nav class="hidden md:flex items-center gap-8 text-[13px] font-500 tracking-wide text-white uppercase">
+          <a href="#" class="nav-link">Home</a>
+          <a href="#cakes" class="nav-link">Cakes</a>
+          <a href="#breads" class="nav-link">Academy</a>
+          <a href="#seasonal" class="nav-link">Seasonal</a>
+          <a href="#about" class="nav-link">About us</a>
+          <a href="#tips" class="nav-link">Get in Touch</a>
+        </nav>
+
+        <!-- Icons -->
+        <div class="flex items-center gap-4 text-cocoa">
+          <!--<form class="flex items-center text-cocoa">
+            <input type="search" placeholder="Search Category" class="p-2 text-sm rounded border-rose bg-white">
+            <button class="hover:text-rose hover:bg-cocoa transition-colors bg-rose text-white rounded p-2" aria-label="Search">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/>
+              </svg>
+            </button>
+          </form>-->
+            
+          <!--<button class="hover:text-rose transition-colors relative" aria-label="Favourites">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </button>
+          <button class="hover:text-rose transition-colors" aria-label="Cart">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+          </button>-->
+          <!-- Mobile hamburger -->
+           
+          <button id="hamburger" class="md:hidden hover:text-rose transition-colors ml-1" aria-label="Menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden border-t border-rose-100 bg-cream">
+      <nav class="flex flex-col gap-0 px-6 py-4 text-[13px] font-500 tracking-widest uppercase text-cocoa">
+        <a href="#" class="py-3 border-b border-rose-100/60 hover:text-rose transition-colors">Home</a>
+        <a href="#cakes" class="py-3 border-b border-rose-100/60 hover:text-rose transition-colors">Cakes</a>
+        <a href="#breads" class="py-3 border-b border-rose-100/60 hover:text-rose transition-colors">Academy</a>
+        <a href="#seasonal" class="py-3 border-b border-rose-100/60 hover:text-rose transition-colors">Seasonal</a>
+        <a href="#about" class="py-3 border-b border-rose-100/60 hover:text-rose transition-colors">About us</a>
+        <a href="#tips" class="py-3 hover:text-rose transition-colors">Get in Touch</a>
+      </nav>
+    </div>
+  </header>
+
+
+  <!--  CATEGORY BANNER-->
+  <section id="cakes" class="bg-blush py-16 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-10 reveal">
+        <p class="font-body text-sm text-mink mt-1">
+          Your Search Results
+        </p><br>
+        <p class="section-heading font-display text-3xl md:text-4xl font-300 text-cocoa">
+          Our Signature Cakes
+        </p>
+        <p class="font-body text-sm text-mink mt-1">10 items found</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Cake 1 -->
+        <article class="card-hover reveal bg-white rounded-sm overflow-hidden shadow-sm group cursor-pointer" style="transition-delay:.05s">
+          <div class="overflow-hidden aspect-[4/3] img-placeholder">
+            <img src="images/yellocake.jpg"
+                 alt="Strawberry Chiffon Cake"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                 onerror="this.style.opacity=0"/>
+          </div>
+  
+          <div class="px-3 py-3">
+            <p class="font-body text-[10px] uppercase tracking-widest text-mink mb-1">Easy Desserts</p>
+            <h3 class="font-display text-xl font-400 text-cocoa leading-snug">7 Cozy Layer Cakes to Bake This Weekend</h3>
+            <p class="font-body text-xs text-mink mt-2 leading-relaxed">Chocolate, caramel & vanilla — all crowd-pleasers.</p>
+          </div>
+
+        </article>
+
+        <!-- Cake 2 -->
+        <article class="card-hover reveal bg-white rounded-sm overflow-hidden shadow-sm group cursor-pointer" style="transition-delay:.12s">
+          <div class="overflow-hidden aspect-[4/3] img-placeholder">
+            <img src="images/pink cake.jpg"
+                 alt="Dark Chocolate Ganache Cake"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                 onerror="this.style.opacity=0"/>
+          </div>
+          <div class="px-3 py-3">
+            <p class="font-body text-[10px] uppercase tracking-widest text-mink mb-1">Easy Desserts</p>
+            <h3 class="font-display text-xl font-400 text-cocoa leading-snug">7 Cozy Layer Cakes to Bake This Weekend</h3>
+            <p class="font-body text-xs text-mink mt-2 leading-relaxed">Chocolate, caramel & vanilla — all crowd-pleasers.</p>
+          </div>
+
+        </article>
+
+        <!-- Cake 3 -->
+        <article class="card-hover reveal bg-white rounded-sm overflow-hidden shadow-sm group cursor-pointer" style="transition-delay:.19s">
+          <div class="overflow-hidden aspect-[4/3] img-placeholder">
+            <img src="images/pink-birthday-cake.jpg"
+                 alt="Lemon Poppy Seed Loaf"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                 onerror="this.style.opacity=0"/>
+          </div>
+          
+          <div class="px-3 py-3">
+            <p class="font-body text-[10px] uppercase tracking-widest text-mink mb-1">Easy Desserts</p>
+            <h3 class="font-display text-xl font-400 text-cocoa leading-snug">7 Cozy Layer Cakes to Bake This Weekend</h3>
+            <p class="font-body text-xs text-mink mt-2 leading-relaxed">Chocolate, caramel & vanilla — all crowd-pleasers.</p>
+          </div>
+        </article>
+
+        <!-- Cake 4 -->
+        <article class="card-hover reveal bg-white rounded-sm overflow-hidden shadow-sm group cursor-pointer" style="transition-delay:.26s">
+          <div class="overflow-hidden aspect-[4/3] img-placeholder">
+            <img src="images/birthdaycake.jpg"
+                 alt="Tres Leches Cake"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                 onerror="this.style.opacity=0"/>
+          </div>
+          <div class="px-3 py-3">
+            <p class="font-body text-[10px] uppercase tracking-widest text-mink mb-1">Easy Desserts</p>
+            <h3 class="font-display text-xl font-400 text-cocoa leading-snug">7 Cozy Layer Cakes to Bake This Weekend</h3>
+            <p class="font-body text-xs text-mink mt-2 leading-relaxed">Chocolate, caramel & vanilla — all crowd-pleasers.</p>
+          </div>
+
+        </article>
+
+        <!-- Cake 5 -->
+        <article class="card-hover reveal bg-white rounded-sm overflow-hidden shadow-sm group cursor-pointer" style="transition-delay:.33s">
+          <div class="overflow-hidden aspect-[4/3] img-placeholder">
+            <img src="images/custom-cake.jpg"
+                 alt="Caramel Pecan Bars"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                 onerror="this.style.opacity=0"/>
+          </div>
+          <div class="px-3 py-3">
+            <p class="font-body text-[10px] uppercase tracking-widest text-mink mb-1">Easy Desserts</p>
+            <h3 class="font-display text-xl font-400 text-cocoa leading-snug">7 Cozy Layer Cakes to Bake This Weekend</h3>
+            <p class="font-body text-xs text-mink mt-2 leading-relaxed">Chocolate, caramel & vanilla — all crowd-pleasers.</p>
+          </div>
+
+        </article>
+
+        <!-- Cake 6 -->
+        <article class="card-hover reveal bg-white rounded-sm overflow-hidden shadow-sm group cursor-pointer" style="transition-delay:.40s">
+          <div class="overflow-hidden aspect-[4/3] img-placeholder">
+            <img src="images/wedding-cake.jpg"
+                 alt="Birthday Cupcakes"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                 onerror="this.style.opacity=0"/>
+          </div>
+          <div class="px-3 py-3">
+            <p class="font-body text-[10px] uppercase tracking-widest text-mink mb-1">Easy Desserts</p>
+            <h3 class="font-display text-xl font-400 text-cocoa leading-snug">7 Cozy Layer Cakes to Bake This Weekend</h3>
+            <p class="font-body text-xs text-mink mt-2 leading-relaxed">Chocolate, caramel & vanilla — all crowd-pleasers.</p>
+          </div>
+
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-ash text-cream/60 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+
+        <div class="lg:col-span-1">
+          <a href="#" class="flex flex-col leading-none mb-4">
+            <span class="font-display text-2xl font-600 tracking-widest text-cream uppercase">
+              <img src="images/logo-white.png"
+              style="width: 150px;"
+              >
+            </span>
+
+          </a>
+          <p class="font-body text-xs leading-relaxed text-cream/50">
+            Handcrafted bakes for every occasion. Made with love from our kitchen to your table.
+          </p>
+        </div>
+
+        <div>
+          <h5 class="font-body text-[11px] uppercase tracking-widest text-cream mb-4">Shop</h5>
+          <ul class="space-y-2 font-body text-xs">
+            <li><a href="#" class="hover:text-rose transition-colors">Cakes</a></li>
+            <li><a href="#" class="hover:text-rose transition-colors">Cookies & Bars</a></li>
+            <li><a href="#" class="hover:text-rose transition-colors">Seasonal Specials</a></li>
+            <li><a href="#" class="hover:text-rose transition-colors">Custom Orders</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="font-body text-[11px] uppercase tracking-widest text-cream mb-4">Learn</h5>
+          <ul class="space-y-2 font-body text-xs">
+            <li><a href="#" class="hover:text-rose transition-colors">Baking Tips</a></li>
+            <li><a href="#" class="hover:text-rose transition-colors">About us</a></li>
+            <li><a href="#" class="hover:text-rose transition-colors">Academy</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="font-body text-[11px] uppercase tracking-widest text-cream mb-4">Connect</h5>
+          <ul class="space-y-2 font-body text-xs">
+            <li><a href="mailto:hello@larozah.com" class="hover:text-rose transition-colors">hello@larozah.com</a></li>
+            <li><a href="#" class="hover:text-rose transition-colors">Instagram</a></li>
+            <li><a href="#" class="hover:text-rose transition-colors">TikTok</a></li>
+            <li><a href="#" class="hover:text-rose transition-colors">Facebook</a></li>
+          </ul>
+        </div>
+      </div>
+
+
+      <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <p class="font-body text-[11px] text-cream/40">&copy;2026 LaRozah. All rights reserved.</p>
+        <div class="flex gap-6 font-body text-[11px] text-cream/40">
+          <a href="#" class="hover:text-rose transition-colors">Privacy Policy</a>
+          <a href="#" class="hover:text-rose transition-colors">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  
+  <!--  SCRIPTS  -->
+  <script>
+    // Mobile menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

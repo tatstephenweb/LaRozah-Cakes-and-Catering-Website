@@ -1,0 +1,82 @@
+
+    /* ── Form ── */
+    .form-input, .form-select, .form-textarea {
+      width:100%; border:1.5px solid #e0c8cf; background:#fff;
+      border-radius:2px; padding:11px 14px; font-family:'Jost',sans-serif;
+      font-size:14px; color:#3B1F14; transition:border-color .2s, box-shadow .2s;
+      appearance: none; -webkit-appearance: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline:none; border-color:#E8325A; box-shadow: 0 0 0 3px rgba(232,50,90,.08);
+    }
+    .form-input.error, .form-select.error, .form-textarea.error {
+      border-color: #E8325A; background: #fff8f9;
+    }
+    .form-label {
+      font-family:'Jost',sans-serif; font-size:11px; font-weight:600;
+      letter-spacing:.12em; text-transform:uppercase; color:#8B5E52;
+      display:block; margin-bottom:6px;
+    }
+    .field-error { font-family:'Jost',sans-serif; font-size:11px; color:#E8325A; margin-top:4px; display:none; }
+    .field-error.show { display:block; }
+
+    /* ── Select arrow ── */
+    .select-wrap { position:relative; }
+    .select-wrap::after {
+      content:''; position:absolute; right:14px; top:50%; transform:translateY(-50%);
+      width:0; height:0; border-left:5px solid transparent; border-right:5px solid transparent;
+      border-top:5px solid #8B5E52; pointer-events:none;
+    }
+
+    /* ── Course cards ── */
+    .course-card {
+      border:2px solid #e0c8cf; border-radius:4px; cursor:pointer;
+      transition:border-color .2s, box-shadow .2s, background .2s;
+      position:relative; overflow:hidden;
+    }
+    .course-card:hover { border-color:#E8325A; box-shadow:0 6px 20px rgba(232,50,90,.1); }
+    .course-card.selected { border-color:#E8325A; background:#fff8f9; box-shadow:0 8px 24px rgba(232,50,90,.15); }
+    .course-card .check-ring {
+      width:22px; height:22px; border-radius:50%; border:2px solid #e0c8cf;
+      display:flex; align-items:center; justify-content:center; flex-shrink:0;
+      transition:all .2s; background:#fff;
+    }
+    .course-card.selected .check-ring { border-color:#E8325A; background:#E8325A; }
+    .course-card .check-mark { display:none; }
+    .course-card.selected .check-mark { display:block; }
+    .course-card .uncheck-mark { display:block; }
+    .course-card.selected .uncheck-mark { display:none; }
+
+    /* ── Level dots ── */
+    .level-dot { width:8px; height:8px; border-radius:50%; display:inline-block; }
+
+    /* ── Step indicator ── */
+    .step-line { height:2px; flex:1; transition:background .4s; }
+
+    /* ── Checkbox custom ── */
+    .custom-check { width:18px; height:18px; border:2px solid #e0c8cf; border-radius:2px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all .2s; }
+    .custom-check.checked { border-color:#E8325A; background:#E8325A; }
+
+    /* ── Submit shimmer ── */
+    .submit-btn { position:relative; overflow:hidden; }
+    .submit-btn::after { content:''; position:absolute; top:0; left:-100%; width:60%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent); transition:left .5s; }
+    .submit-btn:hover::after { left:140%; }
+
+    /* ── Success screen ── */
+    #success-screen { display:none; }
+
+    /* ── Marquee ── */
+    @keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+
+    /* ── Img placeholder ── */
+    .img-ph { background:linear-gradient(135deg,#fdeef3 0%,#f9d0dc 100%); }
+
+    /* ── Input icon wrapper ── */
+    .input-wrap { position:relative; }
+    .input-wrap .input-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:#8B5E52; pointer-events:none; }
+    .input-wrap .form-input { padding-left:38px; }
+
+    /* ── Tooltip ── */
+    .tooltip-wrap:hover .tooltip-box { display:block; }
+    .tooltip-box { display:none; position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#3B1F14; color:#FDF6EF; font-size:11px; padding:5px 10px; border-radius:2px; white-space:nowrap; z-index:10; font-family:'Jost',sans-serif; }
+    .tooltip-box::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:5px solid transparent; border-top-color:#3B1F14; }

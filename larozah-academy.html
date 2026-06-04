@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Larozah Baking Academy – Register</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-academy.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            rose:  { DEFAULT: '#E8325A', light: '#F76B8A', dark: '#C01F45' },
+            cream: '#FDF6EF',
+            cocoa: '#3B1F14',
+            blush: '#FDEEF3',
+            mink:  '#8B5E52',
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"', 'serif'],
+            body:    ['Jost', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+</head>
+<body class="antialiased">
+
+  <!-- ══════════  NAVBAR  ══════════ -->
+  <header class="sticky top-0 z-50 bg-cream/95 backdrop-blur-sm border-b border-rose-100 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-20">
+        <a href="larozah.html" class="flex flex-col leading-none select-none">
+          <img src="images/logo.png"  style="width:100px">
+        </a>
+        <nav class="hidden md:flex items-center gap-8 text-[13px] font-500 tracking-wide text-cocoa uppercase">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="index.html#cakes" class="nav-link">Cakes</a>
+          <a href="index.html#academy" class="nav-link">Academy</a>
+          <a href="index.html#seasonal" class="nav-link">Seasonal</a>
+          <a href="index.html#about" class="nav-link">About us</a>
+          <a href="index.html#cta" class="nav-link">Get in Touch</a>
+        </nav>
+        <div class="flex items-center gap-4 text-cocoa">
+          <!--<a href="larozah-cart.html" class="hover:text-rose transition-colors relative">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          </a>-->
+          <button id="hamburger" class="md:hidden hover:text-rose transition-colors ml-1">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-menu" class="md:hidden border-t border-rose-100 bg-cream">
+      <nav class="flex flex-col gap-0 px-6 py-4 text-[13px] font-500 tracking-widest uppercase text-cocoa">
+       <a href="index.html" class="py-3 border-b border-rose-100/60 hover:text-rose transition-colors">Home</a>
+        <a href="index.html#cakes" class="py-3 border-b border-rose-100/60 hover:text-rose transition-colors">Cakes</a>
+        <a href="index.html#academy" class="py-3 border-b border-rose-100/60 hover:text-rose transition-colors">Academy</a>
+        <a href="index.html#seasonal" class="py-3 border-b border-rose-100/60 hover:text-rose transition-colors">Seasonal</a>
+        <a href="index.html#about" class="py-3 border-b border-rose-100/60 hover:text-rose transition-colors">About us</a>
+        <a href="index.html#cta" class="py-3 hover:text-rose transition-colors">Get in Touch</a>
+      </nav>
+    </div>
+  </header>
+
+
+  <!-- HERO   -->
+  <section class="hero-academy relative overflow-hidden bg-rose" id="hero-academy">
+    <div class="overflow"></div>
+
+    <div class="front max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="flex flex-col md:flex-row items-center min-h-[420px] md:min-h-[500px] gap-8 py-12 md:py-0">
+        <div class="flex-1 text-white text-center">
+          <p class="text-[11px] tracking-[.3em] uppercase font-body font-500 mb-4 opacity-80">larozah cakes and more.</p>
+          <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-300 leading-tight mb-5">
+            LaRozah: Apply for<br/><em>Baking Classes</em>
+          </h1>
+          <p class="font-body text-white/80 text-center max-w-md mx-auto mb-8 leading-relaxed">
+            We offer the best baking academy in the city. If you are ready to learn baking and catering, this is the right place to be.
+          </p>
+          <p id="initialise" style="display: none;">
+            1
+          </p>
+          
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- ══════════  COURSES SECTION  
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+    <div class="mb-10 reveal">
+      <p class="section-heading font-display text-3xl md:text-4xl font-300 text-cocoa">Our Courses</p>
+      <p class="font-body text-sm text-mink mt-1">Choose the programme that fits your goals and skill level.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="course-overview">
+
+      <div class="bg-white rounded-sm border border-rose-100 overflow-hidden reveal group" style="transition-delay:.05s">
+        <div class="overflow-hidden aspect-[4/3] img-ph">
+          <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&auto=format&fit=crop&q=80"
+               alt="Sourdough Mastery" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.style.opacity=0"/>
+        </div>
+        <div class="p-5">
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <span class="badge">Beginner–Inter</span>
+            <span class="font-body text-xs text-mink">8 weeks</span>
+          </div>
+          <h3 class="font-display text-xl text-cocoa font-400 leading-snug mb-1">Sourdough Mastery</h3>
+          <p class="font-body text-xs text-mink leading-relaxed mb-3">Master the art of slow fermentation, shaping and scoring the perfect loaf.</p>
+          <p class="font-body font-600 text-rose text-sm">₦85,000 <span class="font-400 text-mink text-xs">/ course</span></p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-sm border border-rose-100 overflow-hidden reveal group" style="transition-delay:.1s">
+        <div class="overflow-hidden aspect-[4/3] img-ph">
+          <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&auto=format&fit=crop&q=80"
+               alt="Cake Design & Decoration" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.style.opacity=0"/>
+        </div>
+        <div class="p-5">
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <span class="badge">All Levels</span>
+            <span class="font-body text-xs text-mink">6 weeks</span>
+          </div>
+          <h3 class="font-display text-xl text-cocoa font-400 leading-snug mb-1">Cake Design & Decoration</h3>
+          <p class="font-body text-xs text-mink leading-relaxed mb-3">From buttercream basics to sculpted fondant — create stunning celebration cakes.</p>
+          <p class="font-body font-600 text-rose text-sm">₦95,000 <span class="font-400 text-mink text-xs">/ course</span></p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-sm border border-rose-100 overflow-hidden reveal group" style="transition-delay:.15s">
+        <div class="overflow-hidden aspect-[4/3] img-ph">
+          <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=500&auto=format&fit=crop&q=80"
+               alt="French Pastry Foundations" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.style.opacity=0"/>
+        </div>
+        <div class="p-5">
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <span class="badge" style="background:#8B5E52">Intermediate</span>
+            <span class="font-body text-xs text-mink">10 weeks</span>
+          </div>
+          <h3 class="font-display text-xl text-cocoa font-400 leading-snug mb-1">French Pastry Foundations</h3>
+          <p class="font-body text-xs text-mink leading-relaxed mb-3">Croissants, tarts, éclairs and choux — the classics of the French pâtisserie.</p>
+          <p class="font-body font-600 text-rose text-sm">₦110,000 <span class="font-400 text-mink text-xs">/ course</span></p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="text-center mt-8">
+      <a href="#register" class="inline-block bg-rose text-white font-body font-500 text-[12px] uppercase tracking-widest px-10 py-3.5 rounded-sm hover:bg-rose-dark transition-colors">
+        Enrol Now ↓
+      </a>
+    </div>
+  </section>-->
+
+  <!-- ══════════  WHY JOIN  ══════════ -->
+  <section class="bg-blush border-y border-rose-100 py-14 md:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div class="reveal">
+          <p class="font-body text-4xl font-300 text-rose mb-1">200+</p>
+          <p class="font-body text-[11px] uppercase tracking-widest text-mink">Graduates</p>
+        </div>
+        <div class="reveal" style="transition-delay:.07s">
+          <p class="font-body text-4xl font-300 text-rose mb-1">6</p>
+          <p class="font-body text-[11px] uppercase tracking-widest text-mink">Courses</p>
+        </div>
+        <div class="reveal" style="transition-delay:.14s">
+          <p class="font-body text-4xl font-300 text-rose mb-1">8-10</p>
+          <p class="font-body text-[11px] uppercase tracking-widest text-mink">Students / Class</p>
+        </div>
+        <div class="reveal" style="transition-delay:.21s">
+          <p class="font-body text-4xl font-300 text-rose mb-1">100%</p>
+          <p class="font-body text-[11px] uppercase tracking-widest text-mink">Hands-On</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════  REGISTRATION FORM  ══════════ -->
+  <section id="register" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+
+    <div class="mb-10 reveal">
+      <p class="section-heading font-display text-3xl md:text-4xl font-300 text-cocoa">Register for the Academy</p>
+      <p class="font-body text-sm text-mink mt-1">Fill in your details and choose your course — we'll confirm your spot within 48 hours.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-14">
+
+      <!-- ── FORM ── -->
+      <form class="lg:col-span-2 reveal" action="applications.php" method="post">
+
+        <!-- Step indicator -->
+        <div class="flex items-center gap-0 mb-10" id="step-indicator">
+          <div class="flex items-center gap-2 flex-shrink-0" id="s1-wrap">
+            <div id="s1-circle" class="w-8 h-8 rounded-full bg-rose text-white text-[12px] font-600 flex items-center justify-center transition-all">1</div>
+            <span id="s1-label" class="text-[11px] font-500 uppercase tracking-widest text-rose hidden sm:inline">Personal Info</span>
+          </div>
+          <div id="line-1-2" class="step-line bg-rose/30 mx-3"></div>
+          <div class="flex items-center gap-2 flex-shrink-0" id="s2-wrap">
+            <div id="s2-circle" class="w-8 h-8 rounded-full border-2 border-mink/30 text-mink text-[12px] font-600 flex items-center justify-center transition-all">2</div>
+            <span id="s2-label" class="text-[11px] font-500 uppercase tracking-widest text-mink hidden sm:inline">Course Selection</span>
+          </div>
+          <div id="line-2-3" class="step-line bg-mink/20 mx-3"></div>
+          <div class="flex items-center gap-2 flex-shrink-0" id="s3-wrap">
+            <div id="s3-circle" class="w-8 h-8 rounded-full border-2 border-mink/30 text-mink text-[12px] font-600 flex items-center justify-center transition-all">3</div>
+            <span id="s3-label" class="text-[11px] font-500 uppercase tracking-widest text-mink hidden sm:inline">Confirm</span>
+          </div>
+        </div>
+
+        <!-- ── STEP 1: Personal Info ── -->
+        <div id="step-1">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+            <div>
+              <label class="form-label" for="f-fname">Full Name *</label>
+              <div class="input-wrap">
+                <svg class="input-icon w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <input id="f-fname" name="fullname" type="text" class="form-input" placeholder="e.g. Amaka"/>
+              </div>
+              <p class="field-error" id="err-fname">Please enter your full name.</p>
+            </div>
+          </div>
+
+          <div class="mb-5">
+            <label class="form-label" for="f-email">Email Address *</label>
+            <div class="input-wrap">
+              <svg class="input-icon w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <input id="f-email" type="email" name="email" class="form-input" placeholder="you@example.com"/>
+            </div>
+            <p class="field-error" id="err-email">Please enter a valid email address.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+            <div>
+              <label class="form-label" for="f-phone">Phone Number *</label>
+              <div class="input-wrap">
+                <svg class="input-icon w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.79 19.79 0 01.22 1.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.08 6.08l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                <input id="f-phone" type="tel" name="phone" class="form-input" placeholder="+234 801 000 0000"/>
+              </div>
+              <p class="field-error" id="err-phone">Please enter your phone number.</p>
+            </div>
+            <div>
+              <label class="form-label" for="f-age">Age Range *</label>
+              <div class="select-wrap">
+                <select id="f-age" class="form-select" name="age">
+                  <option value="">Select age range…</option>
+                  <option>Under 18</option>
+                  <option>18 - 24</option>
+                  <option>25 - 34</option>
+                  <option>35 - 44</option>
+                  <option>45 - 54</option>
+                  <option>55+</option>
+                </select>
+              </div>
+              <p class="field-error" id="err-age">Please select your age range.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+            <div>
+              <label class="form-label" for="f-exp">Baking Experience *</label>
+              <div class="select-wrap">
+                <select id="f-exp" class="form-select" name="experience">
+                  <option value="">Select level…</option>
+                  <option>Complete Beginner</option>
+                  <option>Home Baker (some experience)</option>
+                  <option>Intermediate</option>
+                  <option>Advanced</option>
+                  <option>Professional</option>
+                </select>
+              </div>
+              <p class="field-error" id="err-exp">Please select your experience level.</p>
+            </div>
+          </div>
+
+          <div class="mb-5">
+            <label class="form-label" for="f-goal">What do you hope to achieve? <span class="normal-case font-400 text-mink/70">(optional)</span></label>
+            <textarea id="f-goal" class="form-textarea" rows="3" name="notes" style="resize:none"
+                      placeholder="e.g. I want to start my own baking business / improve my sourdough technique…" style="min-height:90px;"></textarea>
+          </div>
+
+          <div class="flex justify-end pt-2">
+            <span onclick="goStep(2)" class="submit-btn bg-rose text-white font-body font-500 text-[12px] uppercase tracking-widest px-10 py-3.5 rounded-sm hover:bg-rose-dark transition-colors">
+              Next
+            </span>
+          </div>
+        </div>
+
+        <!-- ── STEP 2: Choose Course ── -->
+        <div id="step-2" class="hidden">
+          <!--<p class="font-body text-sm text-mink mb-6">Select the course you'd like to enrol in, your preferred schedule and intake date.</p>
+
+          <div class="space-y-4 mb-6" id="course-picker">
+
+            <div class="course-card p-5 selected" onclick="selectCourse(this,'Sourdough Mastery','₦85,000','8 weeks')">
+              <div class="flex gap-4 items-start">
+                <div class="w-14 h-14 flex-shrink-0 rounded-sm overflow-hidden img-ph">
+                  <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=120&auto=format&fit=crop&q=80" class="w-full h-full object-cover" onerror="this.style.opacity=0"/>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <div>
+                      <p class="font-body text-[10px] uppercase tracking-widest text-mink mb-0.5">Beginner – Intermediate · 8 weeks</p>
+                      <h4 class="font-display text-lg font-400 text-cocoa leading-snug">Sourdough Mastery</h4>
+                    </div>
+                    <div class="check-ring flex-shrink-0 mt-1">
+                      <svg class="check-mark w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+                      <span class="uncheck-mark"></span>
+                    </div>
+                  </div>
+                  <p class="font-body text-xs text-mink mt-1 leading-relaxed">Master slow fermentation, shaping and scoring — build your signature loaf from scratch.</p>
+                  <div class="flex items-center justify-between mt-3">
+                    <p class="font-body font-600 text-rose text-sm">₦85,000</p>
+                    <div class="flex gap-1">
+                      <span class="level-dot bg-rose"></span>
+                      <span class="level-dot bg-rose"></span>
+                      <span class="level-dot bg-rose/25"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="course-card p-5" onclick="selectCourse(this,'Cake Design & Decoration','₦95,000','6 weeks')">
+              <div class="flex gap-4 items-start">
+                <div class="w-14 h-14 flex-shrink-0 rounded-sm overflow-hidden img-ph">
+                  <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=120&auto=format&fit=crop&q=80" class="w-full h-full object-cover" onerror="this.style.opacity=0"/>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <div>
+                      <p class="font-body text-[10px] uppercase tracking-widest text-mink mb-0.5">All Levels · 6 weeks</p>
+                      <h4 class="font-display text-lg font-400 text-cocoa leading-snug">Cake Design & Decoration</h4>
+                    </div>
+                    <div class="check-ring flex-shrink-0 mt-1">
+                      <svg class="check-mark w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+                      <span class="uncheck-mark"></span>
+                    </div>
+                  </div>
+                  <p class="font-body text-xs text-mink mt-1 leading-relaxed">Buttercream, fondant, ganache drips and hand-painted finishes — become a cake artist.</p>
+                  <div class="flex items-center justify-between mt-3">
+                    <p class="font-body font-600 text-rose text-sm">₦95,000</p>
+                    <div class="flex gap-1">
+                      <span class="level-dot bg-rose"></span>
+                      <span class="level-dot bg-rose"></span>
+                      <span class="level-dot bg-rose"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="course-card p-5" onclick="selectCourse(this,'French Pastry Foundations','₦110,000','10 weeks')">
+              <div class="flex gap-4 items-start">
+                <div class="w-14 h-14 flex-shrink-0 rounded-sm overflow-hidden img-ph">
+                  <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=120&auto=format&fit=crop&q=80" class="w-full h-full object-cover" onerror="this.style.opacity=0"/>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <div>
+                      <p class="font-body text-[10px] uppercase tracking-widest text-mink mb-0.5">Intermediate · 10 weeks</p>
+                      <h4 class="font-display text-lg font-400 text-cocoa leading-snug">French Pastry Foundations</h4>
+                    </div>
+                    <div class="check-ring flex-shrink-0 mt-1">
+                      <svg class="check-mark w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+                      <span class="uncheck-mark"></span>
+                    </div>
+                  </div>
+                  <p class="font-body text-xs text-mink mt-1 leading-relaxed">Croissants, choux, éclairs and tarts — the classics of the French pâtisserie, demystified.</p>
+                  <div class="flex items-center justify-between mt-3">
+                    <p class="font-body font-600 text-rose text-sm">₦110,000</p>
+                    <div class="flex gap-1">
+                      <span class="level-dot bg-rose"></span>
+                      <span class="level-dot bg-rose"></span>
+                      <span class="level-dot bg-rose"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="course-card p-5" onclick="selectCourse(this,'Artisan Bread Baking','₦75,000','6 weeks')">
+              <div class="flex gap-4 items-start">
+                <div class="w-14 h-14 flex-shrink-0 rounded-sm overflow-hidden img-ph">
+                  <img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=120&auto=format&fit=crop&q=80" class="w-full h-full object-cover" onerror="this.style.opacity=0"/>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <div>
+                      <p class="font-body text-[10px] uppercase tracking-widest text-mink mb-0.5">Beginner · 6 weeks</p>
+                      <h4 class="font-display text-lg font-400 text-cocoa leading-snug">Artisan Bread Baking</h4>
+                    </div>
+                    <div class="check-ring flex-shrink-0 mt-1">
+                      <svg class="check-mark w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+                      <span class="uncheck-mark"></span>
+                    </div>
+                  </div>
+                  <p class="font-body text-xs text-mink mt-1 leading-relaxed">Yeasted loaves, enriched doughs, flatbreads and more — the perfect starter course.</p>
+                  <div class="flex items-center justify-between mt-3">
+                    <p class="font-body font-600 text-rose text-sm">₦75,000</p>
+                    <div class="flex gap-1">
+                      <span class="level-dot bg-rose"></span>
+                      <span class="level-dot bg-rose/25"></span>
+                      <span class="level-dot bg-rose/25"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <p class="field-error show" id="err-course" style="display:none;">Please select a course.</p>
+        -->
+
+          <!-- Schedule & intake -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+            <div>
+              <label class="form-label" for="f-schedule">Preferred Schedule *</label>
+              <div class="select-wrap">
+                <select id="f-schedule" class="form-select" name="schedule">
+                  <option value="">Select</option>
+                  <option>Weekdays (Mon - Fri), Morning</option>
+                  <option>Weekdays (Mon - Fri), Evening</option>
+                  <option>Weekends (Sat - Sun), Morning</option>
+                  <option>Weekends (Sat - Sun), Afternoon</option>
+                </select>
+              </div>
+              <p class="field-error" id="err-schedule">Please select a schedule.</p>
+            </div>
+            <div>
+              <label class="form-label" for="f-intake">Intake Date *</label>
+              <div class="select-wrap">
+                <select id="f-intake" class="form-select" name="intake">
+                  <option value="">Select intake</option>
+                  <option>May</option>
+                  <option>June</option>
+                  <option>July</option>
+                  <option>August</option>
+                  <option>September</option>
+                  <option>October</option>
+                </select>
+              </div>
+              <p class="field-error" id="err-intake">Please select an intake date.</p>
+            </div>
+          </div>
+
+          <div class="mb-5">
+            <label class="form-label" for="f-hear">How did you hear about us?</label>
+            <div class="select-wrap">
+              <select id="f-hear" class="form-select" name="heard">
+                <option value="">Select</option>
+                <option>Instagram</option>
+                <option>Word of mouth / Friend</option>
+                <option>Facebook</option>
+                <option>Google</option>
+                <option>Larozah website</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row justify-between gap-3 pt-2">
+            <span onclick="goStep(1)" class="border border-mink/30 text-mink font-body font-500 text-[12px] uppercase tracking-widest px-8 py-3.5 rounded-sm hover:border-rose hover:text-rose transition-colors">
+              Back
+            </span>
+            <span onclick="goStep(3)" class="submit-btn bg-rose text-white font-body font-500 text-[12px] uppercase tracking-widest px-10 py-3.5 rounded-sm hover:bg-rose-dark transition-colors">
+              Next
+            </span>
+          </div>
+        </div>
+
+        <!-- ── STEP 3: Confirm ── -->
+        <div id="step-3" class="hidden">
+          <p class="font-body text-sm text-mink mb-6">Please review your details before submitting.</p>
+
+          <!-- Summary card -->
+          <div class="bg-white border border-rose-100 rounded-sm p-6 mb-6 space-y-4">
+
+            <div class="flex items-center gap-2 pb-3 border-b border-rose-100">
+              <svg class="w-4 h-4 text-rose" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <p class="font-body text-[11px] uppercase tracking-widest text-mink font-600">Personal Details</p>
+            </div>
+            <div class="grid grid-cols-2 gap-3 text-sm font-body">
+              <div><p class="text-mink text-[10px] uppercase tracking-widest mb-0.5">Name</p><p id="rv-name" class="text-cocoa font-500">—</p></div>
+              <div><p class="text-mink text-[10px] uppercase tracking-widest mb-0.5">Email</p><p id="rv-email" class="text-cocoa font-500 break-all">—</p></div>
+              <div><p class="text-mink text-[10px] uppercase tracking-widest mb-0.5">Phone</p><p id="rv-phone" class="text-cocoa font-500">—</p></div>
+              <div><p class="text-mink text-[10px] uppercase tracking-widest mb-0.5">City</p><p id="rv-city" class="text-cocoa font-500">—</p></div>
+              <div><p class="text-mink text-[10px] uppercase tracking-widest mb-0.5">Experience</p><p id="rv-exp" class="text-cocoa font-500">—</p></div>
+              <div><p class="text-mink text-[10px] uppercase tracking-widest mb-0.5">Age Range</p><p id="rv-age" class="text-cocoa font-500">—</p></div>
+            </div>
+
+            <div class="flex items-center gap-2 pb-3 border-b border-rose-100 pt-2">
+              <svg class="w-4 h-4 text-rose" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <p class="font-body text-[11px] uppercase tracking-widest text-mink font-600">Class Selection</p>
+            </div>
+            <div class="grid grid-cols-2 gap-3 text-sm font-body">
+              <div><p class="text-mink text-[10px] uppercase tracking-widest mb-0.5">Schedule</p><p id="rv-schedule" class="text-cocoa font-500">—</p></div>
+              <div><p class="text-mink text-[10px] uppercase tracking-widest mb-0.5">Intake</p><p id="rv-intake" class="text-cocoa font-500">—</p></div>
+            </div>
+
+            <!--<div class="flex items-center justify-between pt-2 border-t border-rose-100">
+              <p class="font-body text-[11px] uppercase tracking-widest text-mink">Course Fee</p>
+              <p id="rv-price" class="font-display text-2xl font-400 text-rose">—</p>
+            </div>-->
+          </div>
+
+          <!-- T&Cs -->
+          <div class="space-y-3 mb-7">
+            <div class="flex items-start gap-3 cursor-pointer" onclick="toggleCheck('tc1')">
+              <div id="tc1" class="custom-check mt-0.5">
+                <svg class="w-3 h-3 text-white hidden" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              </div>
+              <p class="font-body text-sm text-cocoa/80 leading-relaxed">I agree to the Larozah Academy <a href="#" class="text-rose underline hover:no-underline">Terms & Conditions</a> and <a href="#" class="text-rose underline hover:no-underline">Refund Policy</a>. *</p>
+            </div>
+    
+            
+          </div>
+          <p class="field-error" id="err-tc">Please agree to the Terms & Conditions to continue.</p>
+
+          <div class="flex flex-col sm:flex-row justify-between gap-3 pt-2">
+            <span onclick="goStep(2)" class="border border-mink/30 text-mink font-body font-500 text-[12px] uppercase tracking-widest px-8 py-3.5 rounded-sm hover:border-rose hover:text-rose transition-colors">
+              Back
+            </span>
+            <button class="submit-btn bg-rose text-white font-body font-500 text-[12px] uppercase tracking-widest px-10 py-3.5 rounded-sm hover:bg-rose-dark transition-colors flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Submit Application
+            </button>
+          </div>
+        </div>
+
+        <!-- ── SUCCESS
+        <div id="step-success" class="hidden text-center py-10">
+          <div class="w-20 h-20 rounded-full bg-rose/10 flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10 text-rose" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h2 class="font-display text-4xl font-300 text-cocoa mb-3">Application Received!</h2>
+          <p class="font-body text-sm text-mink leading-relaxed max-w-sm mx-auto mb-2">
+            Thank you, <strong id="success-name" class="text-cocoa"></strong>. We've received your application for the
+            <strong id="success-course" class="text-cocoa"></strong> course.
+          </p>
+          <p class="font-body text-sm text-mink leading-relaxed max-w-sm mx-auto mb-8">
+            We'll send a confirmation to <strong id="success-email" class="text-cocoa break-all"></strong> within 48 hours with next steps and deposit details.
+          </p>
+          <div class="flex flex-wrap gap-3 justify-center">
+            <a href="larozah.html" class="inline-block border border-cocoa text-cocoa font-body font-500 text-[12px] uppercase tracking-widest px-7 py-3 rounded-sm hover:bg-cocoa hover:text-cream transition-colors">
+              Back to Shop
+            </a>
+            <a href="larozah-blog.html" class="inline-block bg-rose text-white font-body font-500 text-[12px] uppercase tracking-widest px-7 py-3 rounded-sm hover:bg-rose-dark transition-colors">
+              Read the Journal
+            </a>
+          </div>
+        </div>-->
+
+      </form>
+
+      <!-- ── SIDEBAR ── -->
+      <aside class="lg:col-span-1 reveal" style="transition-delay:.1s">
+
+        <!-- What's included -->
+        <div class="bg-blush border border-rose-100 rounded-sm p-5 mb-5">
+          <p class="font-body text-[11px] uppercase tracking-widest text-cocoa font-600 mb-4">What's Included</p>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3 font-body text-xs text-cocoa/80 leading-relaxed">
+              <svg class="w-4 h-4 text-rose flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              All ingredients & equipment provided
+            </li>
+            <li class="flex items-start gap-3 font-body text-xs text-cocoa/80 leading-relaxed">
+              <svg class="w-4 h-4 text-rose flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              Printed recipe booklet & reference guide
+            </li>
+            <li class="flex items-start gap-3 font-body text-xs text-cocoa/80 leading-relaxed">
+              <svg class="w-4 h-4 text-rose flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              Certificate of completion
+            </li>
+            <li class="flex items-start gap-3 font-body text-xs text-cocoa/80 leading-relaxed">
+              <svg class="w-4 h-4 text-rose flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              Access to the Larozah alumni community
+            </li>
+            <li class="flex items-start gap-3 font-body text-xs text-cocoa/80 leading-relaxed">
+              <svg class="w-4 h-4 text-rose flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              Post-course Q&A session with instructor
+            </li>
+            <li class="flex items-start gap-3 font-body text-xs text-cocoa/80 leading-relaxed">
+              <svg class="w-4 h-4 text-rose flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              10% discount on Larozah shop orders
+            </li>
+          </ul>
+        </div>
+
+      </aside>
+    </div>
+  </section>
+
+  <!-- ══════════  FOOTER  ══════════ -->
+  <footer class="bg-cocoa text-cream/50 py-8 mt-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <p class="font-body text-[11px]">&copy; 2026 LaRozah. All rights reserved.</p>
+      
+    </div>
+  </footer>
+
+  <!-- ══════════  SCRIPTS  ══════════ -->
+  <script>
+//to change background after 7 seconds
+    window.onload = function(){
+      setInterval(()=>{
+        changeHeroBackground();
+      }, 4000);
+      
+    };
+
+
+    // ── Hamburger ──
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.toggle('open');
+    });
+
+    // ── Scroll reveal ──
+    const revObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+    // ── Current step ──
+    let currentStep = 1;
+
+    // ── Step navigation ──
+    function goStep(n) {
+      if (n > currentStep) {
+        if (!validateStep(currentStep)) return;
+      }
+      // Populate review on step 3
+      if (n === 3) populateReview();
+
+      // Hide all
+      [1,2,3].forEach(i => document.getElementById(`step-${i}`).classList.add('hidden'));
+      document.getElementById(`step-${n}`).classList.remove('hidden');
+      currentStep = n;
+      updateStepUI();
+
+      // Scroll to form top on mobile
+      document.getElementById('register').scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+
+    function updateStepUI() {
+      for (let i = 1; i <= 3; i++) {
+        const circle = document.getElementById(`s${i}-circle`);
+        const label  = document.getElementById(`s${i}-label`);
+        if (i < currentStep) {
+          circle.className = 'w-8 h-8 rounded-full bg-cocoa text-white text-[12px] font-600 flex items-center justify-center transition-all';
+          circle.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>`;
+          label && (label.className = 'text-[11px] font-500 uppercase tracking-widest text-cocoa hidden sm:inline');
+        } else if (i === currentStep) {
+          circle.className = 'w-8 h-8 rounded-full bg-rose text-white text-[12px] font-600 flex items-center justify-center transition-all';
+          circle.innerHTML = i;
+          label && (label.className = 'text-[11px] font-500 uppercase tracking-widest text-rose hidden sm:inline');
+        } else {
+          circle.className = 'w-8 h-8 rounded-full border-2 border-mink/30 text-mink text-[12px] font-600 flex items-center justify-center transition-all';
+          circle.innerHTML = i;
+          label && (label.className = 'text-[11px] font-500 uppercase tracking-widest text-mink hidden sm:inline');
+        }
+      }
+      // Update connector lines
+      document.getElementById('line-1-2').style.background = currentStep >= 2 ? '#E8325A' : 'rgba(139,94,82,.2)';
+      document.getElementById('line-2-3').style.background = currentStep >= 3 ? '#E8325A' : 'rgba(139,94,82,.2)';
+    }
+
+    // ── Validation ──
+    function validateStep(step) {
+      let ok = true;
+      if (step === 1) {
+        ok = validate('f-fname','err-fname', v => v.trim().length > 0) && ok;
+        ok = validate('f-email','err-email', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())) && ok;
+        ok = validate('f-phone','err-phone', v => v.trim().length >= 7) && ok;
+        ok = validate('f-age','err-age', v => v !== '') && ok;
+        ok = validate('f-exp','err-exp', v => v !== '') && ok;
+      }
+      if (step === 2) {
+        ok = validate('f-schedule','err-schedule', v => v !== '') && ok;
+        ok = validate('f-intake','err-intake', v => v !== '') && ok;
+      }
+      return ok;
+    }
+
+    function validate(fieldId, errId, fn) {
+      const el  = document.getElementById(fieldId);
+      const err = document.getElementById(errId);
+      const val = el.tagName === 'SELECT' ? el.value : el.value;
+      if (!fn(val)) {
+        el.classList.add('error');
+        err.classList.add('show');
+        return false;
+      }
+      el.classList.remove('error');
+      err.classList.remove('show');
+      return true;
+    }
+
+    // Clear errors on input
+    ['f-fname','f-lname','f-email','f-phone','f-age','f-city','f-exp','f-schedule','f-intake'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('input', () => { el.classList.remove('error'); });
+      el.addEventListener('change', () => { el.classList.remove('error'); });
+    });
+
+    // ── Course selection ──
+/*    function selectCourse(card, name, price, duration) {
+      document.querySelectorAll('.course-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selectedCourse = { name, price, duration };
+      // Update sidebar
+      document.getElementById('side-course').textContent = name;
+      document.getElementById('side-price').textContent = price;
+      document.getElementById('side-duration').textContent = duration;
+      // Update image (simple mapping)
+      const imgs = {
+        'Sourdough Mastery': 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=100&auto=format&fit=crop&q=80',
+        'Cake Design & Decoration': 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=100&auto=format&fit=crop&q=80',
+        'French Pastry Foundations': 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=100&auto=format&fit=crop&q=80',
+        'Artisan Bread Baking': 'https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=100&auto=format&fit=crop&q=80',
+      };
+      document.getElementById('side-img').src = imgs[name] || '';
+    }*/
+
+    // ── Populate review ──
+    function populateReview() {
+      const fname = document.getElementById('f-fname').value.trim();
+      document.getElementById('rv-name').textContent     = `${fname}`;
+      document.getElementById('rv-email').textContent    = document.getElementById('f-email').value.trim();
+      document.getElementById('rv-phone').textContent    = document.getElementById('f-phone').value.trim();
+      document.getElementById('rv-exp').textContent      = document.getElementById('f-exp').value;
+      document.getElementById('rv-age').textContent      = document.getElementById('f-age').value;
+     /* document.getElementById('rv-course').textContent   = selectedCourse.name;
+      document.getElementById('rv-duration').textContent = selectedCourse.duration;*/
+      document.getElementById('rv-schedule').textContent = document.getElementById('f-schedule').value;
+      document.getElementById('rv-intake').textContent   = document.getElementById('f-intake').value;
+      //document.getElementById('rv-price').textContent    = selectedCourse.price;
+    }
+
+    // ── Custom checkboxes ──
+    function toggleCheck(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('checked');
+      const icon = el.querySelector('svg');
+      if (el.classList.contains('checked')) icon.classList.remove('hidden');
+      else icon.classList.add('hidden');
+    }
+
+    // ── Submit ──
+    function submitForm() {
+      const tc1 = document.getElementById('tc1').classList.contains('checked');
+      const errTc = document.getElementById('err-tc');
+      if (!tc1) { errTc.classList.add('show'); return; }
+      errTc.classList.remove('show');
+
+      // Hide steps, show success
+      document.getElementById('step-3').classList.add('hidden');
+      document.getElementById('step-indicator').classList.add('hidden');
+      document.getElementById('step-success').classList.remove('hidden');
+
+      const fname = document.getElementById('f-fname').value.trim();
+      const lname = document.getElementById('f-lname').value.trim();
+      document.getElementById('success-name').textContent   = `${fname} ${lname}`;
+      document.getElementById('success-course').textContent = selectedCourse.name;
+      document.getElementById('success-email').textContent  = document.getElementById('f-email').value.trim();
+
+      document.getElementById('register').scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+
+     function changeHeroBackground(){
+	if(document.getElementById("initialise").innerHTML == "1"){
+		changeHeroBackgroundOne();
+		document.getElementById("initialise").innerHTML = "2";
+	}else if(document.getElementById("initialise").innerHTML == "2"){
+		changeHeroBackgroundTwo();
+		document.getElementById("initialise").innerHTML = "3";
+	}else if(document.getElementById("initialise").innerHTML == "3"){
+		changeHeroBackgroundThree();
+		document.getElementById("initialise").innerHTML = "4";
+	}else if(document.getElementById("initialise").innerHTML == "4"){
+		changeHeroBackgroundFour();
+		document.getElementById("initialise").innerHTML = "5";
+	}else{
+		changeHeroBackgroundFive();
+		document.getElementById("initialise").innerHTML = "1";
+	}
+}
+
+
+function changeHeroBackgroundOne(){
+	let index = 1;
+	let images = ["academy7.jpg", "academy2.jpg", "academy3.jpg", "academy4.jpg", "academy5.jpg", "academy6.jpg", "academy1,jpg"];
+	document.getElementById("hero-academy").style.backgroundImage = `url('${images[index]}')`;
+    
+}
+function changeHeroBackgroundTwo(){
+	let index = 2;
+  let images = ["academy7.jpg", "academy2.jpg", "academy3.jpg", "academy4.jpg", "academy5.jpg", "academy6.jpg", "academy1,jpg"];
+	document.getElementById("hero-academy").style.backgroundImage = `url('${images[index]}')`;
+  
+}
+function changeHeroBackgroundThree(){
+	let index = 0;
+	let images = ["academy7.jpg", "academy2.jpg", "academy3.jpg", "academy4.jpg", "academy5.jpg", "academy6.jpg", "academy1,jpg"];
+	document.getElementById("hero-academy").style.backgroundImage = `url('${images[index]}')`;
+    
+}
+function changeHeroBackgroundFour(){
+	let index = 3;
+	let images = ["academy7.jpg", "academy2.jpg", "academy3.jpg", "academy4.jpg", "academy5.jpg", "academy6.jpg", "academy1,jpg"];
+	document.getElementById("hero-academy").style.backgroundImage = `url('${images[index]}')`;
+    
+}
+function changeHeroBackgroundFive(){
+	let index = 4;
+	let images = ["academy7.jpg", "academy2.jpg", "academy3.jpg", "academy4.jpg", "academy5.jpg", "academy6.jpg", "academy1,jpg"];
+	document.getElementById("hero-academy").style.backgroundImage = `url('${images[index]}')`;
+    
+}
+  </script>
+</body>
+</html>

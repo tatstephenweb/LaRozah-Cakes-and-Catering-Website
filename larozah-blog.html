@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Larozah – The Journal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            rose:  { DEFAULT: '#E8325A', light: '#F76B8A', dark: '#C01F45' },
+            cream: '#FDF6EF',
+            cocoa: '#3B1F14',
+            blush: '#FDEEF3',
+            mink:  '#8B5E52',
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"', 'serif'],
+            body:    ['Jost', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'Jost', sans-serif; background: #FDF6EF; color: #3B1F14; }
+    h1,h2,h3,h4,.font-display { font-family: 'Cormorant Garamond', serif; }
+
+    /* ── Nav ── */
+    #mobile-menu { max-height:0; overflow:hidden; transition:max-height .4s ease; }
+    #mobile-menu.open { max-height:400px; }
+    .nav-link { position:relative; }
+    .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:1.5px; background:#E8325A; transition:width .3s; }
+    .nav-link:hover::after { width:100%; }
+
+    /* ── Reveal ── */
+    .reveal { opacity:0; transform:translateY(22px); transition:opacity .55s ease, transform .55s ease; }
+    .reveal.visible { opacity:1; transform:none; }
+
+    /* ── Badge ── */
+    .badge { display:inline-block; font-size:10px; font-weight:600; letter-spacing:.12em;
+             text-transform:uppercase; color:#fff; background:#E8325A; padding:3px 10px; border-radius:2px; }
+
+    /* ── Section heading ── */
+    .section-heading::before { content:''; display:block; width:36px; height:2px; background:#E8325A; margin-bottom:10px; }
+
+    /* ── Card hover ── */
+    .card-hover { transition:transform .3s ease, box-shadow .3s ease; }
+    .card-hover:hover { transform:translateY(-5px); box-shadow:0 18px 36px rgba(59,31,20,.11); }
+
+    /* ── Img placeholder ── */
+    .img-ph { background:linear-gradient(135deg,#fdeef3 0%,#f9d0dc 100%); }
+
+    /* ── Tag filter pills ── */
+    .tag-pill { font-family:'Jost',sans-serif; font-size:11px; font-weight:500; letter-spacing:.1em;
+                text-transform:uppercase; padding:6px 16px; border-radius:2px; cursor:pointer;
+                border:1.5px solid transparent; transition:all .2s; white-space:nowrap; }
+    .tag-pill.active { background:#E8325A; color:#fff; border-color:#E8325A; }
+    .tag-pill:not(.active) { background:transparent; color:#8B5E52; border-color:#e0c8cf; }
+    .tag-pill:not(.active):hover { border-color:#E8325A; color:#E8325A; }
+
+    /* ── Post card hidden ── */
+    .post-card.hidden-post { display:none; }
+
+    /* ── Modal overlay ── */
+    #modal-overlay {
+      position:fixed; inset:0; z-index:100;
+      background:rgba(59,31,20,.55); backdrop-filter:blur(3px);
+      display:none; align-items:center; justify-content:center; padding:16px;
+    }
+    #modal-overlay.open { display:flex; }
+    #modal-box {
+      background:#FDF6EF; border-radius:4px; width:100%; max-width:680px;
+      max-height:90vh; overflow-y:auto; position:relative;
+      box-shadow:0 32px 64px rgba(59,31,20,.2);
+      animation:modalIn .3s ease;
+    }
+    @keyframes modalIn { from { opacity:0; transform:translateY(20px) scale(.97); } to { opacity:1; transform:none; } }
+
+    /* ── Form inputs ── */
+    .form-input, .form-textarea, .form-select {
+      width:100%; border:1.5px solid #e0c8cf; background:#fff;
+      border-radius:2px; padding:10px 14px; font-family:'Jost',sans-serif;
+      font-size:14px; color:#3B1F14; transition:border-color .2s;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      outline:none; border-color:#E8325A;
+    }
+    .form-textarea { resize:vertical; min-height:140px; line-height:1.6; }
+    .form-label { font-family:'Jost',sans-serif; font-size:11px; font-weight:600;
+                  letter-spacing:.12em; text-transform:uppercase; color:#8B5E52; display:block; margin-bottom:6px; }
+
+    /* ── Read more modal ── */
+    #read-overlay {
+      position:fixed; inset:0; z-index:100;
+      background:rgba(59,31,20,.55); backdrop-filter:blur(3px);
+      display:none; align-items:flex-start; justify-content:center;
+      padding:20px 16px; overflow-y:auto;
+    }
+    #read-overlay.open { display:flex; }
+    #read-box {
+      background:#FDF6EF; border-radius:4px; width:100%; max-width:720px;
+      position:relative; box-shadow:0 32px 64px rgba(59,31,20,.2);
+      animation:modalIn .3s ease; margin:auto;
+    }
+
+    /* ── Toast ── */
+    #toast {
+      position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+      z-index:200; background:#3B1F14; color:#FDF6EF;
+      font-family:'Jost',sans-serif; font-size:13px;
+      padding:12px 24px; border-radius:2px; box-shadow:0 8px 24px rgba(59,31,20,.25);
+      opacity:0; pointer-events:none; transition:opacity .3s; display:flex; align-items:center; gap:10px;
+      white-space:nowrap;
+    }
+
+    /* ── Scrollbar thin ── */
+    #modal-box::-webkit-scrollbar, #read-box::-webkit-scrollbar { width:4px; }
+    #modal-box::-webkit-scrollbar-thumb, #read-box::-webkit-scrollbar-thumb { background:#e0c8cf; border-radius:2px; }
+
+    /* ── Search highlight ── */
+    mark { background:#fdeef3; color:#E8325A; padding:0 2px; border-radius:2px; }
+
+    /* ── Marquee ── */
+    @keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- ══════════  NAVBAR  ══════════ -->
+  <header class="sticky top-0 z-50 bg-cream/95 backdrop-blur-sm border-b border-rose-100 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-20">
+        <a href="larozah.html" class="flex flex-col leading-none select-none">
+          <span class="font-display text-2xl md:text-3xl font-600 tracking-widest text-cocoa uppercase">Larozah</span>
+          <span class="text-[10px] tracking-[.25em] uppercase text-rose font-body font-500">Artisan Baking</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-8 text-[13px] font-500 tracking-wide text-cocoa uppercase">
+          <a href="larozah.html" class="nav-link">Pastries</a>
+          <a href="larozah.html#cakes" class="nav-link">Cakes</a>
+          <a href="larozah.html#breads" class="nav-link">Breads</a>
+          <a href="larozah.html#seasonal" class="nav-link">Seasonal</a>
+          <a href="larozah.html#about" class="nav-link">Our Story</a>
+          <a href="larozah-blog.html" class="nav-link text-rose">Journal</a>
+        </nav>
+        <div class="flex items-center gap-4 text-cocoa">
+          <button class="hover:text-rose transition-colors" onclick="toggleSearch()" aria-label="Search">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+          </button>
+          <a href="larozah-cart.html" class="hover:text-rose transition-colors relative">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          </a>
+          <button id="hamburger" class="md:hidden hover:text-rose transition-colors ml-1">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-menu" class="md:hidden border-t border-rose-100 bg-cream">
+      <nav class="flex flex-col gap-0 px-6 py-4 text-[13px] font-500 tracking-widest uppercase text-cocoa">
+        <a href="larozah.html" class="py-3 border-b border-rose-100/60 hover:text-rose transition-colors">Pastries</a>
+        <a href="larozah.html#cakes" class="py-3 border-b border-rose-100/60 hover:text-rose transition-colors">Cakes</a>
+        <a href="larozah.html#breads" class="py-3 border-b border-rose-100/60 hover:text-rose transition-colors">Breads</a>
+        <a href="larozah.html#seasonal" class="py-3 border-b border-rose-100/60 hover:text-rose transition-colors">Seasonal</a>
+        <a href="larozah.html#about" class="py-3 border-b border-rose-100/60 hover:text-rose transition-colors">Our Story</a>
+        <a href="larozah-blog.html" class="py-3 text-rose">Journal</a>
+      </nav>
+    </div>
+
+    <!-- Search bar (slide down) -->
+    <div id="search-bar" class="hidden border-t border-rose-100 bg-cream px-4 sm:px-6 lg:px-8 py-3">
+      <div class="max-w-xl mx-auto flex items-center gap-3">
+        <svg class="w-4 h-4 text-mink flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input id="search-input" type="text" placeholder="Search the journal…" oninput="filterPosts()"
+               class="flex-1 bg-transparent font-body text-sm text-cocoa placeholder-mink/50 outline-none"/>
+        <button onclick="clearSearch()" class="text-mink hover:text-rose transition-colors text-xs uppercase tracking-widest">Clear</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══════════  HERO  ══════════ -->
+  <section class="relative overflow-hidden" style="background:linear-gradient(130deg,#3B1F14 0%,#5a2d1c 100%);">
+    <div class="absolute inset-0 opacity-5" style="background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:28px 28px;"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10 text-center">
+      <p class="font-body text-[11px] tracking-[.3em] uppercase text-rose mb-4 reveal visible">Stories, Recipes & Moments</p>
+      <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-300 text-cream leading-tight mb-5 reveal visible" style="transition-delay:.06s">
+        The Larozah <em>Journal</em>
+      </h1>
+      <p class="font-body text-cream/60 text-sm md:text-base max-w-lg mx-auto mb-8 leading-relaxed reveal visible" style="transition-delay:.12s">
+        Behind-the-scenes stories, baking tips, seasonal inspirations and news straight from our kitchen.
+      </p>
+      <button onclick="openNewPost()"
+        class="reveal visible inline-flex items-center gap-2 bg-rose text-white font-body font-500 text-[12px] uppercase tracking-widest px-8 py-3.5 rounded-sm hover:bg-rose-dark transition-colors"
+        style="transition-delay:.18s">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        Write a Post
+      </button>
+    </div>
+  </section>
+
+  <!-- ══════════  FILTER BAR  ══════════ -->
+  <div class="border-b border-rose-100 bg-cream/80 backdrop-blur-sm sticky top-[64px] md:top-[80px] z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center gap-3 overflow-x-auto py-3 scrollbar-none" id="filter-bar">
+        <button class="tag-pill active flex-shrink-0" onclick="filterByTag('all', this)">All Posts</button>
+        <button class="tag-pill flex-shrink-0" onclick="filterByTag('Brand Story', this)">Brand Story</button>
+        <button class="tag-pill flex-shrink-0" onclick="filterByTag('Behind the Scenes', this)">Behind the Scenes</button>
+        <button class="tag-pill flex-shrink-0" onclick="filterByTag('Baking Tips', this)">Baking Tips</button>
+        <button class="tag-pill flex-shrink-0" onclick="filterByTag('Recipes', this)">Recipes</button>
+        <button class="tag-pill flex-shrink-0" onclick="filterByTag('Seasonal', this)">Seasonal</button>
+        <button class="tag-pill flex-shrink-0" onclick="filterByTag('News', this)">News</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════  MAIN  ══════════ -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+
+    <!-- Result count -->
+    <div class="flex items-center justify-between mb-8">
+      <p id="result-count" class="font-body text-xs uppercase tracking-widest text-mink"></p>
+      <button onclick="openNewPost()"
+        class="hidden md:inline-flex items-center gap-2 border border-rose text-rose font-body text-[11px] uppercase tracking-widest px-5 py-2.5 rounded-sm hover:bg-rose hover:text-white transition-colors">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        New Post
+      </button>
+    </div>
+
+    <!-- ── FEATURED / HERO POST ── -->
+    <div id="featured-post-wrap" class="mb-12 reveal">
+      <!-- injected by JS -->
+    </div>
+
+    <!-- ── GRID ── -->
+    <div id="posts-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      <!-- injected by JS -->
+    </div>
+
+    <!-- Empty state -->
+    <div id="empty-posts" class="hidden py-24 text-center">
+      <svg class="w-12 h-12 text-rose/25 mx-auto mb-4" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      <h3 class="font-display text-2xl font-300 text-cocoa mb-2">No posts found</h3>
+      <p class="font-body text-sm text-mink mb-6">Try a different tag or search term.</p>
+      <button onclick="filterByTag('all', document.querySelector('.tag-pill'))" class="font-body text-[12px] uppercase tracking-widest text-rose hover:underline">Show all posts</button>
+    </div>
+
+    <!-- Load more -->
+    <div id="load-more-wrap" class="text-center mt-12 hidden">
+      <button id="load-more-btn" onclick="loadMore()" class="inline-block border border-cocoa text-cocoa font-body font-500 text-[12px] uppercase tracking-widest px-10 py-3.5 rounded-sm hover:bg-cocoa hover:text-cream transition-colors">
+        Load More
+      </button>
+    </div>
+
+  </main>
+
+  <!-- ══════════  NEWSLETTER STRIP  ══════════ -->
+  <section class="bg-blush border-t border-rose-100 py-14">
+    <div class="max-w-xl mx-auto px-4 text-center reveal">
+      <p class="font-body text-[10px] uppercase tracking-[.25em] text-rose mb-2">Stay in the loop</p>
+      <h2 class="font-display text-3xl font-300 text-cocoa mb-3">Fresh Posts in Your Inbox</h2>
+      <p class="font-body text-sm text-mink mb-6">Subscribe for new recipes, behind-the-scenes stories and seasonal specials.</p>
+      <div class="flex flex-col sm:flex-row gap-2 max-w-sm mx-auto">
+        <input type="email" placeholder="your@email.com"
+               class="flex-1 border border-rose-100 bg-white rounded-sm px-4 py-3 text-sm font-body text-cocoa placeholder-mink/50 outline-none focus:border-rose transition-colors"/>
+        <button onclick="showToast('Subscribed! Welcome to the Larozah Journal ✦')" class="bg-rose text-white font-body font-500 text-[12px] uppercase tracking-widest px-6 py-3 rounded-sm hover:bg-rose-dark transition-colors flex-shrink-0">
+          Subscribe
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════  FOOTER  ══════════ -->
+  <footer class="bg-cocoa text-cream/50 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <p class="font-body text-[11px]">© 2026 Larozah. All rights reserved.</p>
+      <div class="flex gap-6 font-body text-[11px]">
+        <a href="larozah.html" class="hover:text-rose transition-colors">Shop</a>
+        <a href="larozah-cart.html" class="hover:text-rose transition-colors">Cart</a>
+        <a href="#" class="hover:text-rose transition-colors">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════  NEW / EDIT POST MODAL  ══════════ -->
+  <div id="modal-overlay" onclick="handleOverlayClick(event)">
+    <div id="modal-box" class="p-6 sm:p-8">
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <h2 id="modal-title" class="font-display text-3xl font-400 text-cocoa">Write a New Post</h2>
+          <p class="font-body text-xs text-mink mt-1">Share a story, recipe or update from the Larozah kitchen.</p>
+        </div>
+        <button onclick="closeModal()" class="text-mink hover:text-rose transition-colors ml-4 flex-shrink-0 mt-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="space-y-5">
+        <div>
+          <label class="form-label">Post Title *</label>
+          <input id="f-title" type="text" class="form-input" placeholder="e.g. How We Make Our Sourdough"/>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="form-label">Category *</label>
+            <select id="f-tag" class="form-select">
+              <option value="">Choose a category…</option>
+              <option>Brand Story</option>
+              <option>Behind the Scenes</option>
+              <option>Baking Tips</option>
+              <option>Recipes</option>
+              <option>Seasonal</option>
+              <option>News</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">Author</label>
+            <input id="f-author" type="text" class="form-input" placeholder="e.g. Larozah Kitchen"/>
+          </div>
+        </div>
+        <div>
+          <label class="form-label">Cover Image URL</label>
+          <input id="f-img" type="url" class="form-input" placeholder="https://images.unsplash.com/…"/>
+          <p class="font-body text-[10px] text-mink mt-1">Paste any image URL, or leave blank for a default cover.</p>
+        </div>
+        <div>
+          <label class="form-label">Excerpt (short teaser) *</label>
+          <input id="f-excerpt" type="text" class="form-input" placeholder="A one-sentence hook for your post…"/>
+        </div>
+        <div>
+          <label class="form-label">Full Post Body *</label>
+          <textarea id="f-body" class="form-textarea" placeholder="Write your full post here. Tell the story, share the recipe, give the tips…"></textarea>
+        </div>
+        <div class="flex items-center gap-3">
+          <input id="f-featured" type="checkbox" class="accent-rose w-4 h-4 cursor-pointer"/>
+          <label for="f-featured" class="font-body text-sm text-cocoa cursor-pointer">Pin as Featured Post (hero position)</label>
+        </div>
+      </div>
+
+      <div id="modal-error" class="hidden mt-4 bg-blush border border-rose/20 rounded-sm px-4 py-3 font-body text-sm text-rose"></div>
+
+      <div class="flex flex-col sm:flex-row gap-3 mt-7 pt-5 border-t border-rose-100">
+        <button id="modal-submit" onclick="submitPost()"
+          class="flex-1 bg-rose text-white font-body font-500 text-[12px] uppercase tracking-widest py-3.5 rounded-sm hover:bg-rose-dark transition-colors">
+          Publish Post
+        </button>
+        <button onclick="closeModal()"
+          class="sm:w-auto border border-mink/30 text-mink font-body font-500 text-[12px] uppercase tracking-widest px-7 py-3.5 rounded-sm hover:border-rose hover:text-rose transition-colors">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════  READ POST MODAL  ══════════ -->
+  <div id="read-overlay" onclick="handleReadOverlayClick(event)">
+    <div id="read-box" class="p-6 sm:p-10">
+      <button onclick="closeRead()" class="absolute top-4 right-4 text-mink hover:text-rose transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <div id="read-content"></div>
+    </div>
+  </div>
+
+  <!-- ══════════  TOAST  ══════════ -->
+  <div id="toast">
+    <svg class="w-4 h-4 text-rose flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+    <span id="toast-msg">Done!</span>
+  </div>
+
+  <!-- ══════════  JS  ══════════ -->
+  <script>
+  // ─── Seed posts ───────────────────────────────────────────────────────────
+  const DEFAULT_IMAGES = {
+    'Brand Story':         'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&auto=format&fit=crop&q=80',
+    'Behind the Scenes':   'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=800&auto=format&fit=crop&q=80',
+    'Baking Tips':         'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&auto=format&fit=crop&q=80',
+    'Recipes':             'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&auto=format&fit=crop&q=80',
+    'Seasonal':            'https://images.unsplash.com/photo-1621955964441-c173e01c5e41?w=800&auto=format&fit=crop&q=80',
+    'News':                'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=800&auto=format&fit=crop&q=80',
+  };
+  const FALLBACK_IMG = 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&auto=format&fit=crop&q=80';
+
+  let posts = [
+    {
+      id: 1, featured: true,
+      title: 'How Larozah Began: A Grandmother's Recipe Book',
+      tag: 'Brand Story',
+      author: 'Zara Larozah',
+      date: '12 May 2026',
+      excerpt: 'The story of how a worn, butter-stained recipe book sparked a dream — and a bakery.',
+      body: `It started with a small, cloth-bound book tucked at the back of my grandmother's kitchen drawer. The pages were stained with cocoa powder and vanilla essence, handwritten in her careful cursive. Each recipe carried a memory: the Christmas pound cake that perfumed the entire house, the chin-chin she fried every Eid, the coconut bread she saved for Sunday mornings.\n\nWhen I moved to Lagos in 2018 to study design, I brought the book with me. I didn't intend to bake professionally — I just baked to feel close to home. Late-night cookie runs for my flatmates. Birthday cakes made in a tiny toaster oven. A layered strawberry cake for a friend's graduation that prompted six order requests.\n\nBy early 2019, the requests had outgrown my toaster oven. I bought a proper oven, rented a shared kitchen space in Surulere, and launched Larozah on Instagram with three posts and a prayer.\n\nToday, every item we bake still draws from that original recipe book — updated, tested, refined, but rooted in the same love. We bake because food is memory. We bake because sharing something handmade is one of the most generous things you can do.`,
+      img: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=900&auto=format&fit=crop&q=80',
+      readTime: '4 min read',
+    },
+    {
+      id: 2, featured: false,
+      title: 'A Saturday Morning in Our Kitchen',
+      tag: 'Behind the Scenes',
+      author: 'Larozah Kitchen',
+      date: '5 May 2026',
+      excerpt: 'We open the kitchen doors at 5 am. Here's what a full Saturday looks like for our small team.',
+      body: `5:00 AM — The oven goes on first. Before the flour is weighed, before the butter softens, the oven needs to come to temperature. It takes about 20 minutes. We use that time to set up our mise en place and go through the order list for the day.\n\n6:30 AM — The sourdough loaves that have been cold-proofing overnight go straight into the Dutch oven. There's a satisfying crack when the steam is released at the 20-minute mark.\n\n8:00 AM — The cake layers are baked and cooling on racks. The kitchen smells incredible at this point — warm vanilla, toasted sugar, a hint of butter. This is the hour we all love most.\n\n10:00 AM — Assembly begins. Cakes are levelled, filled, and crumb-coated. Cupcakes are topped. Bars are sliced and packaged.\n\n12:00 PM — First orders go out for collection. We greet every customer at the door.\n\n2:00 PM — The kitchen is clean. The team eats together — usually whatever was slightly imperfect from the morning's bake. It's always the best meal of the week.`,
+      img: 'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=800&auto=format&fit=crop&q=80',
+      readTime: '3 min read',
+    },
+    {
+      id: 3, featured: false,
+      title: '5 Mistakes Everyone Makes With Buttercream',
+      tag: 'Baking Tips',
+      author: 'Zara Larozah',
+      date: '28 Apr 2026',
+      excerpt: 'Grainy, too sweet, won't pipe? We've made every buttercream mistake so you don't have to.',
+      body: `Buttercream is deceptively simple. Four ingredients — butter, icing sugar, cream, vanilla — and yet it's one of the most complained-about elements in home baking. Here are the five mistakes we see most often, and how to fix them.\n\n**1. Using cold butter.** Cold butter won't cream properly. You'll end up with lumps that never fully incorporate. Your butter should leave an indent when pressed but not be so soft it's greasy.\n\n**2. Adding all the sugar at once.** Always add icing sugar in two or three batches, letting each incorporate before adding more. This prevents a cloud of sugar dust and a grainy finish.\n\n**3. Not beating it long enough.** Proper American buttercream needs at least 5 minutes of beating after all the sugar is in. It should turn almost white and look fluffy.\n\n**4. Over-sweetening.** A tiny pinch of salt and a small squeeze of lemon juice will cut through sweetness dramatically. Try it — it's a game changer.\n\n**5. Piping straight from the bowl.** Let your buttercream rest for 10 minutes before piping. This pops the air bubbles and gives you a smoother finish.`,
+      img: 'https://images.unsplash.com/photo-1607478900766-efe13248b125?w=800&auto=format&fit=crop&q=80',
+      readTime: '5 min read',
+    },
+    {
+      id: 4, featured: false,
+      title: 'Our New Summer Menu Is Here',
+      tag: 'News',
+      author: 'Larozah Kitchen',
+      date: '20 Apr 2026',
+      excerpt: 'Mango coconut tarts, raspberry rose bars and a new seasonal drink — the Larozah summer lineup is officially live.',
+      body: `We've been testing since February, and we're proud to announce the Larozah Summer 2026 menu is now available to order.\n\nHere's what's new:\n\n**Mango Coconut Custard Tart** — Buttery shortcrust, silky coconut custard, fresh mango coulis on top. Light and tropical. $36 each.\n\n**Raspberry Rose Cheesecake Bars** — Our most requested limited-edition item returns. New York–style cheesecake base, rose-laced raspberry swirl, graham cracker crust. Box of 6 for $28.\n\n**Hibiscus Lemon Pound Cake** — Vibrant, fragrant, and glazed with a tart hibiscus syrup. Available whole or by the slice. $40 whole / $7 per slice.\n\n**Rose Lemonade** (drink) — Fresh-pressed, lightly sweetened, a perfect pairing for a summer order. $3 per bottle.\n\nAll items are available to order online or for walk-in collection Friday–Sunday. Custom orders for summer events are open — reach out via email.`,
+      img: 'https://images.unsplash.com/photo-1509365465985-25d11c17e812?w=800&auto=format&fit=crop&q=80',
+      readTime: '2 min read',
+    },
+    {
+      id: 5, featured: false,
+      title: 'Classic Chocolate Chip Cookies — Our Way',
+      tag: 'Recipes',
+      author: 'Zara Larozah',
+      date: '14 Apr 2026',
+      excerpt: 'The recipe we've made hundreds of times. Crisp edges, chewy centres, never disappoints.',
+      body: `This is the recipe we come back to over and over. It's not fussy. It doesn't need brown butter or fancy chocolate (though both help). It just needs good technique.\n\n**Ingredients (makes ~20 cookies)**\n- 225g unsalted butter, room temperature\n- 200g light brown sugar\n- 100g caster sugar\n- 2 large eggs\n- 2 tsp vanilla extract\n- 340g plain flour\n- 1 tsp bicarbonate of soda\n- 1 tsp fine sea salt\n- 300g good-quality chocolate, roughly chopped\n\n**Method**\n\n1. Cream butter and both sugars for 4–5 minutes until pale and fluffy.\n2. Add eggs one at a time, beating well after each. Add vanilla.\n3. Fold in flour, bicarb and salt until just combined — don't overmix.\n4. Fold in chocolate.\n5. Refrigerate the dough for at least 2 hours (overnight is better).\n6. Preheat oven to 180°C. Scoop into balls, place on lined trays.\n7. Bake 11–13 minutes. They should look underdone in the centre.\n8. Rest on the tray for 10 minutes before transferring. They firm up as they cool.`,
+      img: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=800&auto=format&fit=crop&q=80',
+      readTime: '4 min read',
+    },
+    {
+      id: 6, featured: false,
+      title: 'Why We Only Use Stone-Ground Flour',
+      tag: 'Brand Story',
+      author: 'Zara Larozah',
+      date: '7 Apr 2026',
+      excerpt: 'It costs more, it behaves differently, and we wouldn't swap it for anything. Here's why.',
+      body: `When we first started Larozah, we used the most widely available supermarket flour. Our bread was fine — good, even. But when we switched to a Nigerian stone-ground whole wheat flour from a small mill in Kaduna, something shifted.\n\nThe bread had more flavour. More depth. The sourdough crumb became more open, the crust more blistered. Customers noticed before we said anything.\n\nStone-ground flour retains more of the wheat germ and bran, which means more natural oils, more flavour compounds, and a slower fermentation that's better for digestion. It also means slightly less gluten strength — which means our doughs need more attention, more time, and a baker who knows what they're feeling for.\n\nWe've tried switching back twice when supply got tight. Both times, the bread told us. We'll never switch back permanently.\n\nGood flour is expensive. We pass none of that cost to our customers — it's simply the cost of doing things properly.`,
+      img: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&auto=format&fit=crop&q=80',
+      readTime: '3 min read',
+    },
+  ];
+
+  let nextId = 7;
+  let currentTag = 'all';
+  let currentSearch = '';
+  let editingId = null;
+  const POSTS_PER_PAGE = 6;
+  let visibleCount = POSTS_PER_PAGE;
+
+  // ─── Render ───────────────────────────────────────────────────────────────
+  function getImg(post) {
+    return (post.img && post.img.trim()) ? post.img : (DEFAULT_IMAGES[post.tag] || FALLBACK_IMG);
+  }
+
+  function filtered() {
+    let p = [...posts];
+    if (currentTag !== 'all') p = p.filter(x => x.tag === currentTag);
+    if (currentSearch.trim()) {
+      const q = currentSearch.toLowerCase();
+      p = p.filter(x =>
+        x.title.toLowerCase().includes(q) ||
+        x.excerpt.toLowerCase().includes(q) ||
+        x.tag.toLowerCase().includes(q) ||
+        (x.author || '').toLowerCase().includes(q)
+      );
+    }
+    return p;
+  }
+
+  function highlight(text) {
+    if (!currentSearch.trim()) return text;
+    const q = currentSearch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return text.replace(new RegExp(`(${q})`, 'gi'), '<mark>$1</mark>');
+  }
+
+  function render() {
+    const fp = filtered();
+    const featured = fp.find(p => p.featured);
+    const grid = fp.filter(p => !p.featured);
+
+    // Featured
+    const fw = document.getElementById('featured-post-wrap');
+    if (featured && currentTag === 'all' && !currentSearch.trim()) {
+      fw.innerHTML = `
+        <div class="relative overflow-hidden rounded-sm bg-cocoa group cursor-pointer card-hover"
+             onclick="readPost(${featured.id})">
+          <div class="absolute inset-0">
+            <img src="${getImg(featured)}" alt="${featured.title}"
+                 class="w-full h-full object-cover opacity-40 group-hover:opacity-50 transition-opacity duration-500 group-hover:scale-105 transition-transform"
+                 onerror="this.style.opacity=0"/>
+          </div>
+          <div class="relative z-10 p-8 md:p-12 lg:p-16 max-w-2xl">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="badge">${featured.tag}</span>
+              <span class="font-body text-[10px] uppercase tracking-widest text-cream/50">${featured.readTime}</span>
+            </div>
+            <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-300 text-cream leading-tight mb-4">${highlight(featured.title)}</h2>
+            <p class="font-body text-sm text-cream/70 leading-relaxed mb-6 max-w-lg">${highlight(featured.excerpt)}</p>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-rose flex items-center justify-center text-white font-display text-sm font-600">
+                  ${(featured.author || 'L')[0].toUpperCase()}
+                </div>
+                <div>
+                  <p class="font-body text-xs text-cream font-500">${featured.author || 'Larozah Kitchen'}</p>
+                  <p class="font-body text-[10px] text-cream/50">${featured.date}</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="event.stopPropagation(); openEditPost(${featured.id})"
+                        class="text-cream/40 hover:text-cream transition-colors p-1.5 rounded-sm hover:bg-white/10">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </button>
+                <button onclick="event.stopPropagation(); deletePost(${featured.id})"
+                        class="text-cream/40 hover:text-rose transition-colors p-1.5 rounded-sm hover:bg-white/10">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      fw.classList.remove('hidden');
+    } else {
+      fw.innerHTML = '';
+      fw.classList.add('hidden');
+    }
+
+    // Grid
+    const gridEl = document.getElementById('posts-grid');
+    const slice = grid.slice(0, visibleCount);
+
+    if (slice.length === 0 && !featured) {
+      gridEl.innerHTML = '';
+      document.getElementById('empty-posts').classList.remove('hidden');
+    } else {
+      document.getElementById('empty-posts').classList.add('hidden');
+      gridEl.innerHTML = slice.map((p, i) => `
+        <article class="post-card card-hover reveal group cursor-pointer flex flex-col"
+                 data-tag="${p.tag}"
+                 style="transition-delay:${(i % 3) * 0.07}s"
+                 onclick="readPost(${p.id})">
+          <div class="relative overflow-hidden rounded-sm aspect-[4/3] img-ph flex-shrink-0">
+            <img src="${getImg(p)}" alt="${p.title}"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                 onerror="this.style.opacity=0"/>
+            <span class="badge absolute top-3 left-3">${p.tag}</span>
+          </div>
+          <div class="pt-4 flex flex-col flex-1">
+            <div class="flex items-center gap-2 mb-2">
+              <p class="font-body text-[10px] uppercase tracking-widest text-mink">${p.date}</p>
+              <span class="text-mink/30">·</span>
+              <p class="font-body text-[10px] uppercase tracking-widest text-mink">${p.readTime}</p>
+            </div>
+            <h3 class="font-display text-xl font-400 text-cocoa leading-snug mb-2 flex-1">${highlight(p.title)}</h3>
+            <p class="font-body text-xs text-mink leading-relaxed mb-4">${highlight(p.excerpt)}</p>
+            <div class="flex items-center justify-between mt-auto pt-3 border-t border-rose-100">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-rose flex items-center justify-center text-white font-display text-xs font-600">
+                  ${(p.author || 'L')[0].toUpperCase()}
+                </div>
+                <span class="font-body text-[11px] text-mink">${p.author || 'Larozah Kitchen'}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <button onclick="event.stopPropagation(); openEditPost(${p.id})"
+                        class="text-mink/40 hover:text-cocoa transition-colors p-1.5 rounded-sm hover:bg-blush">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </button>
+                <button onclick="event.stopPropagation(); deletePost(${p.id})"
+                        class="text-mink/40 hover:text-rose transition-colors p-1.5 rounded-sm hover:bg-blush">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>`).join('');
+
+      // Re-observe reveals
+      document.querySelectorAll('#posts-grid .reveal').forEach(el => {
+        revObs.observe(el);
+        setTimeout(() => el.classList.add('visible'), 50);
+      });
+    }
+
+    // Result count
+    const total = fp.length;
+    document.getElementById('result-count').textContent =
+      total === 0 ? '' : `${total} post${total !== 1 ? 's' : ''}`;
+
+    // Load more
+    const lmw = document.getElementById('load-more-wrap');
+    if (grid.length > visibleCount) { lmw.classList.remove('hidden'); }
+    else { lmw.classList.add('hidden'); }
+  }
+
+  function loadMore() {
+    visibleCount += POSTS_PER_PAGE;
+    render();
+  }
+
+  // ─── Filter & search ─────────────────────────────────────────────────────
+  function filterByTag(tag, btn) {
+    currentTag = tag;
+    visibleCount = POSTS_PER_PAGE;
+    document.querySelectorAll('.tag-pill').forEach(p => p.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    render();
+  }
+
+  function filterPosts() {
+    currentSearch = document.getElementById('search-input').value;
+    visibleCount = POSTS_PER_PAGE;
+    render();
+  }
+
+  function toggleSearch() {
+    const bar = document.getElementById('search-bar');
+    bar.classList.toggle('hidden');
+    if (!bar.classList.contains('hidden')) {
+      document.getElementById('search-input').focus();
+    }
+  }
+
+  function clearSearch() {
+    document.getElementById('search-input').value = '';
+    currentSearch = '';
+    render();
+  }
+
+  // ─── Read post ────────────────────────────────────────────────────────────
+  function readPost(id) {
+    const p = posts.find(x => x.id === id);
+    if (!p) return;
+    const body = (p.body || '')
+      .split('\n\n')
+      .map(para => `<p class="font-body text-sm text-cocoa/80 leading-relaxed mb-4">${para.replace(/\*\*(.*?)\*\*/g, '<strong class="text-cocoa">$1</strong>')}</p>`)
+      .join('');
+    document.getElementById('read-content').innerHTML = `
+      <div class="overflow-hidden rounded-sm aspect-[16/7] img-ph mb-6 -mx-6 sm:-mx-10 -mt-6 sm:-mt-10">
+        <img src="${getImg(p)}" alt="${p.title}" class="w-full h-full object-cover" onerror="this.style.opacity=0"/>
+      </div>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="badge">${p.tag}</span>
+        <span class="font-body text-[10px] uppercase tracking-widest text-mink">${p.readTime}</span>
+        ${p.featured ? '<span class="font-body text-[10px] uppercase tracking-widest text-rose">✦ Featured</span>' : ''}
+      </div>
+      <h2 class="font-display text-3xl md:text-4xl font-300 text-cocoa leading-tight mb-3">${p.title}</h2>
+      <div class="flex items-center gap-3 mb-6 pb-6 border-b border-rose-100">
+        <div class="w-8 h-8 rounded-full bg-rose flex items-center justify-center text-white font-display text-sm font-600">
+          ${(p.author || 'L')[0].toUpperCase()}
+        </div>
+        <div>
+          <p class="font-body text-sm text-cocoa font-500">${p.author || 'Larozah Kitchen'}</p>
+          <p class="font-body text-[11px] text-mink">${p.date}</p>
+        </div>
+      </div>
+      <div>${body}</div>
+      <div class="flex gap-3 mt-8 pt-6 border-t border-rose-100">
+        <button onclick="closeRead(); openEditPost(${p.id})"
+                class="inline-flex items-center gap-2 border border-cocoa text-cocoa font-body text-[11px] uppercase tracking-widest px-5 py-2.5 rounded-sm hover:bg-cocoa hover:text-cream transition-colors">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Edit Post
+        </button>
+        <button onclick="closeRead(); deletePost(${p.id})"
+                class="inline-flex items-center gap-2 border border-rose/30 text-rose font-body text-[11px] uppercase tracking-widest px-5 py-2.5 rounded-sm hover:bg-rose hover:text-white transition-colors">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+          Delete
+        </button>
+      </div>`;
+    document.getElementById('read-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeRead() {
+    document.getElementById('read-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function handleReadOverlayClick(e) {
+    if (e.target === document.getElementById('read-overlay')) closeRead();
+  }
+
+  // ─── New / edit modal ─────────────────────────────────────────────────────
+  function openNewPost() {
+    editingId = null;
+    document.getElementById('modal-title').textContent = 'Write a New Post';
+    document.getElementById('modal-submit').textContent = 'Publish Post';
+    document.getElementById('f-title').value = '';
+    document.getElementById('f-tag').value = '';
+    document.getElementById('f-author').value = '';
+    document.getElementById('f-img').value = '';
+    document.getElementById('f-excerpt').value = '';
+    document.getElementById('f-body').value = '';
+    document.getElementById('f-featured').checked = false;
+    document.getElementById('modal-error').classList.add('hidden');
+    document.getElementById('modal-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('f-title').focus(), 150);
+  }
+
+  function openEditPost(id) {
+    const p = posts.find(x => x.id === id);
+    if (!p) return;
+    editingId = id;
+    document.getElementById('modal-title').textContent = 'Edit Post';
+    document.getElementById('modal-submit').textContent = 'Save Changes';
+    document.getElementById('f-title').value = p.title;
+    document.getElementById('f-tag').value = p.tag;
+    document.getElementById('f-author').value = p.author || '';
+    document.getElementById('f-img').value = p.img || '';
+    document.getElementById('f-excerpt').value = p.excerpt;
+    document.getElementById('f-body').value = p.body || '';
+    document.getElementById('f-featured').checked = !!p.featured;
+    document.getElementById('modal-error').classList.add('hidden');
+    document.getElementById('modal-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modal-overlay')) closeModal();
+  }
+
+  function submitPost() {
+    const title   = document.getElementById('f-title').value.trim();
+    const tag     = document.getElementById('f-tag').value;
+    const author  = document.getElementById('f-author').value.trim() || 'Larozah Kitchen';
+    const img     = document.getElementById('f-img').value.trim();
+    const excerpt = document.getElementById('f-excerpt').value.trim();
+    const body    = document.getElementById('f-body').value.trim();
+    const featured = document.getElementById('f-featured').checked;
+    const errEl   = document.getElementById('modal-error');
+
+    if (!title || !tag || !excerpt || !body) {
+      errEl.textContent = 'Please fill in all required fields (Title, Category, Excerpt, Body).';
+      errEl.classList.remove('hidden');
+      return;
+    }
+    errEl.classList.add('hidden');
+
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+    const wordCount = body.split(/\s+/).length;
+    const readTime = Math.max(1, Math.round(wordCount / 200)) + ' min read';
+
+    if (editingId !== null) {
+      const idx = posts.findIndex(p => p.id === editingId);
+      if (idx > -1) {
+        // If marking as featured, unfeature others
+        if (featured) posts.forEach(p => { p.featured = false; });
+        posts[idx] = { ...posts[idx], title, tag, author, img, excerpt, body, featured, readTime };
+        showToast('Post updated successfully ✦');
+      }
+    } else {
+      if (featured) posts.forEach(p => { p.featured = false; });
+      posts.unshift({ id: nextId++, title, tag, author, img, excerpt, body, featured, date: dateStr, readTime });
+      showToast('Post published! ✦');
+    }
+
+    closeModal();
+    visibleCount = POSTS_PER_PAGE;
+    render();
+  }
+
+  // ─── Delete ───────────────────────────────────────────────────────────────
+  function deletePost(id) {
+    if (!confirm('Delete this post? This cannot be undone.')) return;
+    posts = posts.filter(p => p.id !== id);
+    showToast('Post deleted.');
+    render();
+  }
+
+  // ─── Toast ────────────────────────────────────────────────────────────────
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toast-msg').textContent = msg;
+    t.style.opacity = '1'; t.style.pointerEvents = 'auto';
+    setTimeout(() => { t.style.opacity = '0'; t.style.pointerEvents = 'none'; }, 3000);
+  }
+
+  // ─── Scroll reveal ────────────────────────────────────────────────────────
+  const revObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+  // ─── Nav hamburger ────────────────────────────────────────────────────────
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.toggle('open');
+  });
+
+  // ─── Keyboard close ──────────────────────────────────────────────────────
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeModal(); closeRead(); }
+  });
+
+  // ─── Initial render ───────────────────────────────────────────────────────
+  render();
+  </script>
+</body>
+</html>
